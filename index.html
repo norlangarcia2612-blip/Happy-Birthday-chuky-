@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Una sorpresa para ti 💜</title>
+<style>
+:root{--purple:#8b5cf6;--pink:#f472b6;--gold:#f8d477;--dark:#110c24}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Georgia,serif;background:radial-gradient(circle at 50% 0,#3b2367,#110c24 65%);color:#fff;overflow-x:hidden}
+.screen{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:25px 14px;position:relative;overflow:hidden}
+.card{width:min(94vw,560px);padding:32px 22px;border:1px solid #ffffff30;border-radius:30px;background:#17102ce8;backdrop-filter:blur(12px);box-shadow:0 25px 80px #0008;text-align:center;position:relative;z-index:3}
+h1{font-size:clamp(42px,12vw,76px);line-height:.95;margin:12px 0;color:var(--gold);font-style:italic;overflow-wrap:anywhere}
+h2{font-size:32px;color:#f5d8ff;margin:8px 0 18px}p{font-size:18px;line-height:1.65;margin:13px 0}
+.btn{border:0;border-radius:999px;padding:15px 24px;margin:10px 5px;background:linear-gradient(135deg,#f8d477,#f472b6);color:#24102f;font-size:16px;font-weight:bold;cursor:pointer;box-shadow:0 10px 25px #0005}
+.gift{font-size:92px;filter:drop-shadow(0 8px 15px #0006);animation:pulse 1.8s infinite}@keyframes pulse{50%{transform:scale(1.08)}}
+.hidden{display:none!important}.balloons{position:absolute;inset:0;z-index:1;pointer-events:none}
+.balloon{position:absolute;width:58px;height:72px;border-radius:50% 50% 46% 46%;opacity:.9;animation:float 5s ease-in-out infinite}
+.balloon:after{content:"";position:absolute;left:50%;top:68px;height:100px;border-left:1px solid #fff6}
+.a{left:5%;top:8%;background:#f472b6}.b{right:5%;top:18%;background:#8b5cf6;animation-delay:1s}.c{left:8%;bottom:10%;background:#f8d477;animation-delay:2s}.d{right:8%;bottom:8%;background:#60a5fa;animation-delay:1.4s}
+@keyframes float{50%{transform:translateY(-22px) rotate(4deg)}}
+.confetti{position:fixed;inset:0;pointer-events:none;z-index:20;overflow:hidden}.confetti i{position:absolute;top:-25px;width:8px;height:16px;animation:fall 3.8s linear forwards}@keyframes fall{to{transform:translateY(110vh) rotate(720deg)}}
+.gallery{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:18px 0}.photo{padding:0;border:0;background:#2b1b48;border-radius:16px;overflow:hidden;aspect-ratio:1/1;cursor:pointer;position:relative}.photo img{width:100%;height:100%;object-fit:cover;display:block;transition:.35s}.photo:hover img{transform:scale(1.06)}.photo span{position:absolute;right:7px;bottom:5px;font-size:22px;text-shadow:0 2px 5px #000}
+.lightbox{position:fixed;inset:0;background:#000d;z-index:30;display:flex;align-items:center;justify-content:center;padding:20px}.lightbox img{max-width:94vw;max-height:88vh;border-radius:18px;box-shadow:0 20px 80px #000}.close{position:absolute;top:20px;right:20px;border:0;background:#ffffff33;color:#fff;border-radius:50%;font-size:25px;width:45px;height:45px;cursor:pointer}
+.edit{outline:1px dashed transparent;border-radius:6px}.edit:focus{outline-color:#ffffff55}.hint{font:13px Arial,sans-serif;color:#d9cce8;margin-top:20px}
+.progress{height:5px;background:#ffffff18;border-radius:10px;overflow:hidden;margin:22px 0}.progress div{height:100%;width:0;background:linear-gradient(90deg,#f8d477,#f472b6);transition:width 1s}
+.music-note{font-family:Arial,sans-serif;font-size:13px;color:#eadff5;margin-top:12px}
+@media(max-width:380px){.card{padding:26px 15px}.gallery{gap:6px}.photo{border-radius:11px}h2{font-size:27px}}
+</style>
+</head>
+<body>
+<div class="balloons" aria-hidden="true"><i class="balloon a"></i><i class="balloon b"></i><i class="balloon c"></i><i class="balloon d"></i></div>
+<div id="confetti" class="confetti" aria-hidden="true"></div>
+
+<section class="screen" id="s1"><div class="card">
+<div class="gift">🎁</div>
+<div class="edit" contenteditable="true"><h1>Una sorpresa<br>para ti</h1></div>
+<p class="edit" contenteditable="true">Hay días que merecen algo diferente… así que preparé esto especialmente para usted. 💜</p>
+<button class="btn" onclick="reveal()">✨ Abrir sorpresa</button>
+</div></section>
+
+<section class="screen hidden" id="s2"><div class="card">
+<div style="font-size:55px">🎈✨</div>
+<h2 class="edit" contenteditable="true">¡Hoy celebra su día!</h2>
+<p class="edit" contenteditable="true">Quiero desearle mucha salud, felicidad, éxito y momentos que se conviertan en recuerdos bonitos.</p>
+<p class="edit" contenteditable="true">Que siga caminando con perseverancia, humildad y esa forma tan especial de ser que la hace única. ❤️</p>
+<div class="progress"><div id="bar"></div></div>
+<button class="btn" onclick="go(3)">📸 FELICITACIONES</button>
+</div></section>
+
+<section class="screen hidden" id="s3"><div class="card">
+<h2>📸 FELICITACIONES 🤍</h2>
+<p class="edit" contenteditable="true">Es usted una persona maravillosa y muy carismática 😇.</p>
+<div class="gallery" id="gallery">
+<button class="photo" onclick="openLightbox(0)" aria-label="Ampliar foto 1"><img src="Foto1.webp" alt="Recuerdo 1"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(1)" aria-label="Ampliar foto 2"><img src="Foto%202.webp" alt="Recuerdo 2"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(2)" aria-label="Ampliar foto 3"><img src="Foto%203.webp" alt="Recuerdo 3"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(3)" aria-label="Ampliar foto 4"><img src="Foto%204.webp" alt="Recuerdo 4"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(4)" aria-label="Ampliar foto 5"><img src="Foto%205.webp" alt="Recuerdo 5"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(5)" aria-label="Ampliar foto 6"><img src="Foto%206.webp" alt="Recuerdo 6"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(6)" aria-label="Ampliar foto 7"><img src="Foto%208.webp" alt="Recuerdo 7"><span>♡</span></button>
+<button class="photo" onclick="openLightbox(7)" aria-label="Ampliar foto 8"><img src="Foto%209.webp" alt="Recuerdo 8"><span>♡</span></button>
+</div>
+<button class="btn" onclick="go(4)">💌 Leer el mensaje final</button>
+</div></section>
+
+<section class="screen hidden" id="s4"><div class="card">
+<div style="font-size:60px">💜</div>
+<h1 class="edit" contenteditable="true">¡Feliz cumpleaños! 🎂</h1>
+<p class="edit" contenteditable="true">Reciba un abrazo muy especial y mis mejores deseos hoy y siempre. ❤️</p>
+<p class="edit" contenteditable="true">En este día tan especial quiero hacerle llegar mis mejores deseos y recordarle el gran aprecio y cariño que le tengo.</p>
+<p class="edit" contenteditable="true">Aunque el tiempo pase y la vida nos lleve por distintos caminos, hay personas que permanecen presentes de una manera especial. Usted es una de ellas, y siempre le recuerdo con mucho cariño. ✨</p>
+<p class="edit" contenteditable="true"><b>Que pueda disfrutar cada día y que la vida le conceda muchas cosas bonitas. Espero que pase un cumpleaños maravilloso, rodeada de cariño y de las personas que le aprecian. ATT: THE GREAT GATSBY 🎂🎈</b></p>
+<button class="btn" onclick="finale()">🎊 ¡Última sorpresa!</button>
+<div class="music-note">🎵 Música: <b>music.mp3</b></div>
+<p class="hint">Puede cambiar los textos directamente tocándolos y editándolos.</p>
+</div></section>
+
+<div id="lightbox" class="lightbox hidden" role="dialog" aria-modal="true" aria-label="Foto ampliada" onclick="closeLightbox(event)"><button class="close" onclick="closeLightbox(event)" aria-label="Cerrar foto">×</button><img id="big" src="" alt="Foto ampliada"></div>
+<audio id="musica" src="music.mp3" preload="auto" loop></audio>
+<script>
+// IMPORTANTE: los nombres deben coincidir exactamente con los archivos subidos al repositorio.
+const photos=['Foto1.webp','Foto 2.webp','Foto 3.webp','Foto 4.webp','Foto 5.webp','Foto 6.webp','Foto 8.webp','Foto 9.webp'];
+function confetti(n=180){const c=document.getElementById('confetti');c.innerHTML='';for(let i=0;i<n;i++){const x=document.createElement('i');x.style.left=Math.random()*100+'%';x.style.animationDelay=(Math.random()*1.2)+'s';x.style.background=['#f8d477','#f472b6','#8b5cf6','#60a5fa','#fff'][Math.floor(Math.random()*5)];x.style.transform='rotate('+Math.random()*360+'deg)';c.appendChild(x)}setTimeout(()=>c.innerHTML='',4500)}
+function go(n){for(let i=1;i<=4;i++)document.getElementById('s'+i).classList.add('hidden');document.getElementById('s'+n).classList.remove('hidden');window.scrollTo({top:0,behavior:'smooth'})}
+function reveal(){confetti();go(2);setTimeout(()=>document.getElementById('bar').style.width='100%',100);}
+function finale(){const musica=document.getElementById('musica');musica.currentTime=0;musica.play().catch(()=>{alert('No se pudo iniciar la música. Comprueba que music.mp3 esté subido junto a index.html y vuelve a tocar el botón.')});confetti(320);}
+function openLightbox(i){if(!photos[i])return;const box=document.getElementById('lightbox');document.getElementById('big').src=encodeURI(photos[i]);box.classList.remove('hidden')}
+function closeLightbox(event){if(event && event.target!==document.getElementById('lightbox') && !event.target.classList.contains('close'))return;document.getElementById('lightbox').classList.add('hidden');document.getElementById('big').src=''}
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLightbox();});
+</script>
+</body>
+</html>
